@@ -1,65 +1,53 @@
 # ── AI Video Assistant ── requirements.txt ───────────────────────────────────
-
-# Python >= 3.10 recommended
+# Python >= 3.10 recommended (set via runtime.txt for Streamlit Cloud)
 
 # ── Audio / Video Acquisition ─────────────────────────────────────────────────
-
-yt-dlp>=2026.7.4                 # Download videos/audio from YouTube
-pydub>=0.25.1                    # Audio manipulation and conversion
-ffmpeg-python>=0.2.0             # Python bindings for FFmpeg
-# FFmpeg binary must be installed separately
+yt-dlp                            # Download videos/audio from YouTube
+pydub                             # Audio manipulation and conversion
+ffmpeg-python                     # Python bindings for FFmpeg
+# FFmpeg binary must be installed separately (see packages.txt)
 
 # ── Speech-to-Text ────────────────────────────────────────────────────────────
-
-openai-whisper>=20250625         # Local OpenAI Whisper speech recognition
-torch>=2.13.0                    # PyTorch backend for Whisper
-torchaudio>=2.11.0               # PyTorch audio utilities
+openai-whisper                    # Local OpenAI Whisper speech recognition
+torch                             # PyTorch backend for Whisper
+torchaudio                        # PyTorch audio utilities
 
 # ── Translation ───────────────────────────────────────────────────────────────
-
-deep-translator>=1.11.4          # Translation wrapper
+deep-translator                   # Translation wrapper
 
 # ── LLM Orchestration — LangChain + Mistral ───────────────────────────────────
-
-langchain>=1.3.15
-langchain-core>=1.5.5
-langchain-community>=0.4.2
-langchain-text-splitters>=1.1.2
-langchain-mistralai>=1.1.6       # LangChain integration for Mistral
-mistralai>=2.9.3                 # Official Mistral Python client
+langchain
+langchain-core
+langchain-community
+langchain-text-splitters
+langchain-mistralai                # LangChain integration for Mistral
+mistralai                          # Official Mistral Python client
 
 # ── RAG Pipeline / Vector Database ────────────────────────────────────────────
-
-chromadb>=1.5.9                  # Local vector database
-langchain-chroma>=1.1.0          # LangChain ↔ Chroma integration
-sentence-transformers>=5.7.0     # HuggingFace embedding models
-langchain-huggingface>=1.2.2     # LangChain ↔ HuggingFace integration
-huggingface-hub>=1.27.0          # HuggingFace model downloads
-tiktoken>=0.13.0                 # Tokenization / token counting
+chromadb                          # Local vector database
+langchain-chroma                  # LangChain ↔ Chroma integration
+sentence-transformers             # HuggingFace embedding models
+langchain-huggingface             # LangChain ↔ HuggingFace integration
+huggingface-hub                   # HuggingFace model downloads
+tiktoken                          # Tokenization / token counting
 
 # ── Streamlit UI ──────────────────────────────────────────────────────────────
-
-streamlit>=1.61.1
-streamlit-extras>=1.6.0          # Additional Streamlit components
-watchdog>=6.0.0                  # Streamlit file watching / hot reload
+streamlit
+streamlit-extras                  # Additional Streamlit components
+watchdog                          # Streamlit file watching / hot reload
 
 # ── PDF Generation / Export ───────────────────────────────────────────────────
-
-reportlab>=5.0.0                 # PDF generation
-fpdf2>=2.8.8                     # Lightweight PDF generation
+reportlab                         # PDF generation
+fpdf2                             # Lightweight PDF generation
 
 # ── Environment / Utilities ───────────────────────────────────────────────────
-
-python-dotenv>=1.2.2             # Load environment variables from .env
-requests>=2.34.2                 # HTTP requests
-numpy>=2.4.6                     # Numerical operations
-pandas>=3.0.5                    # Data manipulation
-tqdm>=4.70.0                     # Progress bars
+python-dotenv                     # Load environment variables from .env
+requests                          # HTTP requests
+numpy
+pandas
+tqdm                              # Progress bars
 
 # ── Optional / Image Support ──────────────────────────────────────────────────
-
-torchvision>=0.28.0              # Image/vision utilities when required
-pillow>=12.3.0                   # Image processing
-scikit-learn>=1.9.0              # ML utilities / similarity / preprocessing
-
-python-dotenv
+torchvision                       # Image/vision utilities when required
+pillow                            # Image processing
+scikit-learn                      # ML utilities / similarity / preprocessing
