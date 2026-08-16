@@ -62,4 +62,4 @@ torchvision>=0.28.0              # Image/vision utilities when required
 pillow>=12.3.0                   # Image processing
 scikit-learn>=1.9.0              # ML utilities / similarity / preprocessing
 
-dotenv
+python-dotenv
