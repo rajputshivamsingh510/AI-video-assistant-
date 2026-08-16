@@ -1,17 +1,32 @@
 import yt_dlp
 from pydub import AudioSegment
 import os
+import shutil
 
 DOWNLOAD_DIR = 'downloades'
 os.makedirs(DOWNLOAD_DIR, exist_ok=True)
 
-# ffmpeg install location. app.py already adds this to PATH for Whisper,
-# but yt-dlp and pydub take their own explicit config too, so we set it here
-# as well (belt-and-braces — works even if this module is ever used standalone).
-FFMPEG_LOCATION = r"C:\Users\rajpu\ffmpeg\bin"
+# ffmpeg location handling — works both locally on Windows AND on
+# Streamlit Community Cloud (Linux):
+#
+# - Locally on Windows: ffmpeg isn't on PATH, so we point at the hardcoded
+#   install folder.
+# - On Streamlit Cloud: ffmpeg is installed via packages.txt (apt-get) and
+#   is already on the system PATH — shutil.which("ffmpeg") finds it, so we
+#   skip the hardcoded Windows path entirely and let yt-dlp/pydub use
+#   whatever's on PATH.
+_ffmpeg_on_path = shutil.which("ffmpeg") is not None
 
-AudioSegment.converter = os.path.join(FFMPEG_LOCATION, "ffmpeg.exe")
-AudioSegment.ffprobe = os.path.join(FFMPEG_LOCATION, "ffprobe.exe")
+FFMPEG_LOCATION = None
+if os.name == "nt" and not _ffmpeg_on_path:
+    FFMPEG_LOCATION = r"C:\Users\rajpu\ffmpeg\bin"
+
+if FFMPEG_LOCATION:
+    os.environ["PATH"] = FFMPEG_LOCATION + os.pathsep + os.environ["PATH"]
+    AudioSegment.converter = os.path.join(FFMPEG_LOCATION, "ffmpeg.exe")
+    AudioSegment.ffprobe = os.path.join(FFMPEG_LOCATION, "ffprobe.exe")
+# else: ffmpeg is already resolvable on PATH (Cloud / properly configured
+# local machine) — pydub and yt-dlp will find it automatically.
 
 
 def download_youtube_audio(url: str) -> str:
