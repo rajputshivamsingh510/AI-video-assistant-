@@ -103,20 +103,30 @@ def transcribe_chunk(chunk_path: str, language: str = "english") -> str:
     return transcribe_chunk_whisper(chunk_path)
 
 
-def transcribe_all(chunks: list, language: str = "english") -> str:
+def transcribe_all(chunks: list, language: str = "english", progress_callback=None) -> str:
+    """
+    progress_callback, if given, is called after each chunk finishes with a
+    single int argument: percentage (0-100) of chunks completed so far.
+    Lets the UI show real progress instead of a static "in progress" state.
+    """
 
     full_transcript = "" 
 
     engine = "Sarvam AI" if language.lower() == "hinglish" else "Whisper"
     print(f"Using {engine} for transcription.")
 
+    total = len(chunks)
+
     for i, chunk in enumerate(chunks):  
 
-        print(f"Transcribing chunk {i + 1}/{len(chunks)}...")
+        print(f"Transcribing chunk {i + 1}/{total}...")
 
         text = transcribe_chunk(chunk, language=language)  
 
         full_transcript += text + " "  
+
+        if progress_callback:
+            progress_callback(int(((i + 1) / total) * 100))
 
     print("Transcription complete.")
 
